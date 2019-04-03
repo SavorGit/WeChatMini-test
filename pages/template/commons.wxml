@@ -1,0 +1,78 @@
+<!--pages/template/commons.wxml-->
+
+<!-- 微信授权登录 -->
+<template name="wxAuthLogin">
+  <modal show="{{show}}" height='420rpx' width="90%" background-color='unset' border-radius="0rpx" title-text="" confirm-text="" cancel-text="">
+    <view class='wxAuthLogin-container'>
+      <view class='wxAuthLogin-top'>
+        <view class='opt'>
+          <!-- <button class='close' bindtap='closeAuth'>
+            <image src='/images/icon/666666_close.png'></image>
+          </button> -->
+        </view>
+        <view class='title'>
+          <label class='font_1CBEB6_34'>温馨提示</label>
+        </view>
+      </view>
+      <view class='wxAuthLogin-middle'>
+        <label class='content font_333333_30'>使用“小热点-极简版”过程中，请遵守相关法律法规。</label>
+        <!-- <label class='link_relief'>
+          <navigator url="/pages/forscreen/relief">免责声明</navigator>
+        </label> -->
+      </view>
+      <view class='wxAuthLogin-bottom'>
+        <button class='savor-btn' open-type="getUserInfo" bindgetuserinfo="onGetUserInfo" data-wifi_name="{{wifi_name}}" data-wifi_password="{{wifi_password}}" data-intranet_ip="{{intranet_ip}}" data-wifi_mac="{{wifi_mac}}" data-openid="{{openid}}">微信授权登录</button>
+      </view>
+    </view>
+  </modal>
+</template>
+
+<!-- 固定悬浮按钮组 -->
+<template name="fixedSuspensionButtonGroup">
+  <view class='fixedSuspensionButtonGroup'>
+    <view class='scan_tdc'>
+      <button class='theme' bindtap='openControl'>遥控器</button>
+    </view>
+  </view>
+</template>
+
+<!-- 遥控器窗口 -->
+<template name="remoteControlWindow">
+  <modal show="{{popRemoteControlWindow}}" height='990rpx' width="620rpx" background-color='unset' border-radius="0rpx" title-text="" confirm-text="" cancel-text="">
+    <view class='remoteControlWindow-container'>
+      <view bindtap='closeControl' class='remoteControlWindow-control'>
+        <image src='/images/icon/666666_close.png'></image>
+      </view>
+      <view class='remoteControlWindow-top'>
+        <view class='opt'>
+          <button bindtap='changeProgram' data-change_type='1'>
+            <image src='/images/icon/last-one.png'></image>
+          </button>
+          <button bindtap='changeProgram'  data-change_type='2'>
+            <image src='/images/icon/next-one.png'></image>
+          </button>
+          <button bindtap='changeVolume'  data-change_type='3'>
+            <image src='/images/icon/volume-down.png'></image>
+          </button>
+          <button bindtap='changeVolume'  data-change_type='4'>
+            <image src='/images/icon/volume-up.png'></image>
+          </button>
+        </view>
+      </view>
+      <view class='remoteControlWindow-middle'>
+        <button bindtap='callQrCode' data-openid='{{openid}}'  data-qrcode_img='/images/imgs/dstp.png'>
+          <image src='/images/icon/big-button.png'></image>
+          <image src='/images/imgs/dstp.png' style='width: 310rpx; height: 310rpx; padding: 13rpx; border-radius: 50%; top: 33rpx; left: 33rpx; background-color: #FFFFFF;'></image>
+        </button>
+        <view class='btn-tip'>
+          <image src='/images/icon/click-hand.png'></image>
+          <label>点TA，让TA上电视</label>
+        </view>
+      </view>
+      <view class='remoteControlWindow-bottom'>
+        <button bindtap="exitForscreen"   class='theme-button3'>退出投屏</button>
+        <navigator class='theme-button4'  target="miniProgram" app-id="wxfdf0346934bb672f" path="pages/index/index" version="release">前往普通版</navigator>
+      </view>
+    </view>
+  </modal>
+</template>

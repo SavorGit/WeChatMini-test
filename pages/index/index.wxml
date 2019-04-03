@@ -1,0 +1,98 @@
+<!--index.wxml-->
+<import src="/pages/template/commons" />
+<view class="container">
+  <view class='full_width flex_row_center page-top'>
+    <view wx:if="{{is_link_wifi ==0}}" class='full_width full_height top-tip'>
+      <label>传输速度慢？链接包间wif试试！</label>
+      <button bindtap='viewWifi' data-box_mac='{{box_mac}}'>链接wifi</button>
+    </view>
+  </view>
+  <view class='page-main'>
+    <view class='tip'>
+
+      <block wx:if="{{is_link_wifi ==1}}">
+        <label>您已成功链接“{{hotel_name}}”的{{room_name}}电视</label>
+      </block>
+
+      <block wx:else>
+        <label> </label>
+      </block>
+    </view>
+    <button class='btn' bindtap="chooseImage" disabled='{{img_disable}}' data-boxmac="{{box_mac}}" data-openid="{{openid}}">
+      <image src='/images/icon/FFFFFF_picture.png'></image>
+      <label>照片上电视</label>
+    </button>
+    <button class='btn' bindtap='chooseVideo' disabled='{{video_disable}}' data-boxmac="{{box_mac}}" data-openid="{{openid}}">
+      <image src='/images/icon/FFFFFF_video.png'></image>
+      <label>视频上电视</label>
+    </button>
+    <button class='btn' bindtap='showHappy' disabled='{{birthday_disable}}' data-boxmac="{{box_mac}}" data-openid="{{openid}}">
+      <image src='/images/icon/FFFFFF_birthday.png'></image>
+      <label>生日歌点播</label>
+    </button>
+
+    <!-- <view class='btn' bindtap='scanCode' >
+      <image src='/images/icon/FFFFFF_video.png'></image>
+      <label>test</label>
+    </view> -->
+  </view>
+  <view class='full_width page-bottom'>
+    <!-- <navigator target="miniProgram" app-id="wxfdf0346934bb672f" path="pages/index/index">
+      <label>前往「热点投屏」普通版</label>
+      <image src='/images/icon/white-right-arrow.png'></image>
+    </navigator> -->
+    <view class='full_width jump-standard'>
+      <label>使用其他功能，请前往「热点投屏」普通版</label>
+      <navigator class='button' target="miniProgram" app-id="wxfdf0346934bb672f" path="pages/index/index">前往普通版</navigator>
+    </view>
+  </view>
+  <view wx:if="{{is_view_wifi ==1}}" class='wifi-tip' style='display:flex;'>
+    <view class='wifi-ssid'>
+      <label>wifi名称：{{wifi_name}}</label>
+    </view>
+    <view class='wifi-pass'>
+      <label>wifi密码：{{wifi_password}}</label>
+      <button bindtap='copyPasswod' data-wifi_password="{{wifi_password}}">复制</button>
+    </view>
+  </view>
+  <view class="body-view">
+    <loading hidden="{{hiddens}}" bindchange="loadingChange">正在连接包间wifi,请稍后...</loading>
+  </view>
+</view>
+
+<!-- 微信授权 -->
+<template is="wxAuthLogin" data='{{show: showWXAuthLogin,wifi_mac:wifi_mac,wifi_name:wifi_name,wifi_password:use_wifi_password,intranet_ip:intranet_ip,openid:openid}}' />
+
+<!-- 非正常渠道进入 - 弹窗 -->
+<modal show='{{showModal}}' width="90vw" height="420rpx" title-text="温馨提示" confirmText="" cancelText="">
+  <view style='display: flex;flex-direction: column;align-items: center; font-size: 30rpx;'>
+    <label style='height: 50rpx;'>使用前需前往[热点投屏]小程序进行链接电视，</label>
+    <label style='height: 50rpx;'>否则无法使用本小程序的功能。</label>
+    <label style='height: 50rpx;'>为您带来的不便，敬请谅解。</label>
+    <navigator target="miniProgram" app-id="wxfdf0346934bb672f" path="pages/index/index">
+      <button style='width: 260rpx; height: 60rpx; line-height: 60rpx; color: #FFF; font-size: 28rpx; margin: 30rpx 0 0 0; padding: 0; border: 0; background-color: rgb(28, 190, 182); border-radius: 30rpx;'>前往[热点投屏]</button>
+    </navigator>
+  </view>
+</modal>
+
+
+<!-- 连接WIFI重试 - 弹窗 -->
+<modal show='{{showRetryModal}}' width="80vw" height="300rpx" title-text="" confirmText="" cancelText="">
+  <view style='display: flex;flex-direction: column;align-items: center; font-size: 30rpx;padding-top:60rpx;padding-bottom:50rpx;'>
+    <label style='height: 50rpx;'>当前无线局域网"{{wifi_name}}"</label>
+    <label style='height: 50rpx;'>暂时无法连接</label>
+  </view>
+  <view style='display: flex;flex-direction: row;align-items: center;'>
+    <button style='width: 260rpx; height: 60rpx; line-height: 60rpx; color: #FFF; font-size: 28rpx; margin: auto; padding: 0; border: 0; background-color: rgb(28, 190, 182); border-radius: 30rpx;text-align:center;' bindtap='netRetry'>重试</button>
+    <navigator style='width: 260rpx; height: 60rpx; line-height: 60rpx; color: #FFF; font-size: 28rpx; margin: auto; padding: 0; border: 0; background-color: rgb(28, 190, 182); border-radius: 30rpx;text-align:center;' target="miniProgram" app-id="wxfdf0346934bb672f"
+      path="pages/index/index">进入普通版</navigator>
+  </view>
+</modal>
+
+<!-- 固定悬浮按钮组 -->
+<view wx:if="{{box_mac !=''}}">
+  <template is="fixedSuspensionButtonGroup" />
+</view>
+
+<!-- 遥控器 -->
+<template is="remoteControlWindow" data='{{popRemoteControlWindow: popRemoteControlWindow, qrcode_img: qrcode_img}}' />
