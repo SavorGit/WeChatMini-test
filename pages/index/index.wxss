@@ -92,7 +92,6 @@
 .page-bottom .jump-standard > label {
   margin-bottom: 30rpx;
 }
-
 .page-bottom .jump-standard .buttons {
   width: 70%;
   display: flex;
@@ -100,7 +99,6 @@
   align-items: center;
   justify-content: space-between;
 }
-
 .page-bottom .jump-standard .button {
   width: 170rpx;
   height: 50rpx;
@@ -118,6 +116,8 @@
   border-radius: 5px;
   -webkit-tap-highlight-color: transparent;
   overflow: hidden;
+  color: #fff;
+  background-color: #133960;
 }
 
 .page-bottom image {

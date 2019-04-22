@@ -498,5 +498,7 @@ App({
     mobile_brand: '',
     mobile_model: '',
     api_url: 'https://dev-mobile.littlehotspot.com',
+    common_appid:'wxe59b125a3f073901',
+    rest_appid:'wx329d3de0b91b00a2'
   }
 })

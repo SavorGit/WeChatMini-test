@@ -5,6 +5,7 @@ var openid;
 var box_mac;
 var intranet_ip;
 var qrcode_url;
+var api_url = app.globalData.api_url;
 Page({
 
   /**
@@ -23,7 +24,7 @@ Page({
     box_mac = options.box_mac;
     intranet_ip = options.intranet_ip;
     wx.request({
-      url: app.globalData.api_url +'/Smallappsimple/birthdaydemand/demandList',
+      url: api_url+'/Smallappsimple/birthdaydemand/demandList',
       headers: {
         'Content-Type': 'application/json'
       },

@@ -12,6 +12,9 @@ var wifi_mac;
 var use_wifi_password;
 var forscreen_type;
 var qrcode_url;
+var common_appid = app.globalData.common_appid;
+var rest_appid   = app.globalData.rest_appid;
+var api_url = app.globalData.api_url;
 Page({
   data: {
     
@@ -28,6 +31,7 @@ Page({
     wifi_name:'',
     wifi_password:'',
     hiddens:true,
+    is_view_rest:1,
     
     showRetryModal: true, //连接WIFI重试弹窗
   },
@@ -35,7 +39,10 @@ Page({
     //this.setData({ showRetryModal: true});
     var that = this;
     var scene = decodeURIComponent(e.scene);
-    
+    that.setData({
+      common_appid: common_appid,
+      rest_appid: rest_appid,
+    })
     if (scene != 'undefined' ){//扫小程序码过来 
       box_mac = scene;  
       //box_mac = '00226D655202'
@@ -49,6 +56,7 @@ Page({
     }
     if (box_mac == undefined || box_mac =='undefined' || box_mac=='' ){
       that.setData({
+        is_view_rest:0,
         showModal:true
       })
     }else {
@@ -69,7 +77,7 @@ Page({
         //扫码埋点
 
         wx.request({
-          url: app.globalData.api_url+'/smallapp21/index/recOverQrcodeLog',
+          url: api_url+'/smallapp21/index/recOverQrcodeLog',
           data: {
             "openid": openid,
             "box_mac": box_mac,
@@ -82,7 +90,7 @@ Page({
         })
         //判断用户是否注册
         wx.request({
-          url: app.globalData.api_url +'/smallappsimple/User/isJjRegister',
+          url: api_url+'/smallappsimple/User/isJjRegister',
           data: {
             "openid": app.globalData.openid,
           },
@@ -116,7 +124,7 @@ Page({
             //扫码埋点
             
             wx.request({
-              url: app.globalData.api_url +'/smallapp21/index/recOverQrcodeLog',
+              url: api_url+'/smallapp21/index/recOverQrcodeLog',
               data: {
                 "openid": openid,
                 "box_mac": box_mac,
@@ -132,7 +140,7 @@ Page({
             
             //判断用户是否注册
             wx.request({
-              url: app.globalData.api_url +'/smallappsimple/User/isJjRegister',
+              url: api_url+'/smallappsimple/User/isJjRegister',
               data: {
                 "openid": openid,
               },
@@ -159,7 +167,7 @@ Page({
       function getHotelInfo(box_mac,openid) {//获取链接的酒楼信息
         
         wx.request({
-          url: app.globalData.api_url +'/Smallappsimple/Index/getHotelInfo',
+          url: api_url+'/Smallappsimple/Index/getHotelInfo',
           headers: {
             'Content-Type': 'application/json'
           },
@@ -177,6 +185,7 @@ Page({
 
               if (wifi_name == '' || wifi_mac==''){
                 that.setData({
+                  is_view_rest :0,
                   hiddens:true,
                   showRetryModal:true
                 })
@@ -258,7 +267,7 @@ Page({
       box_mac = res.target.dataset.box_mac;
      
       wx.request({
-        url: app.globalData.api_url +'/Smallappsimple/Index/getHotelInfo',
+        url: api_url+'/Smallappsimple/Index/getHotelInfo',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -525,7 +534,7 @@ Page({
     openid = user_info.openid;
     if (res.detail.errMsg == 'getUserInfo:ok') {
       wx.request({
-        url: app.globalData.api_url +'/Smallappsimple/User/register',
+        url: api_url+'/Smallappsimple/User/register',
         data: {
           'openid': openid,
           'avatarUrl': res.detail.userInfo.avatarUrl,
@@ -564,7 +573,7 @@ Page({
       box_mac = '';
     }
     wx.request({
-      url: app.globalData.api_url +'/Smallapp21/index/closeauthLog',
+      url: api_url+'/Smallapp21/index/closeauthLog',
       header: {
         'content-type': 'application/json'
       },

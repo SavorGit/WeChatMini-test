@@ -5,6 +5,7 @@ var openid;
 var box_mac;
 var intranet_ip;
 var qrcode_url;
+var api_url = app.globalData.api_url;
 Page({
 
   /**
@@ -19,6 +20,7 @@ Page({
     is_forscreen:0,
     hiddens:true,
     replay_btn:0,
+    is_open_control:false,
   },
 
   /**
@@ -126,13 +128,16 @@ Page({
           duration: 2000
         });
       },
-      fial: function ({ errMsg }) {
-
+      fail: function ({ errMsg }) {
+        
         wx.showToast({
           title: '退出失败',
           icon: 'none',
           duration: 2000
         });
+        wx.reLaunch({
+          url: '/pages/index/index?box_mac=' + box_mac,
+        })
       },
     })
   },
@@ -218,6 +223,7 @@ Page({
     var resouce_size = res.target.dataset.resouce_size;
     var duration     = res.target.dataset.duration;
     var vedio_url    = res.target.dataset.vedio_url;
+    var box_mac      = res.target.dataset.box_mac;
     wx.uploadFile({
       url: 'http://' + intranet_ip + ':8080/videoH5?deviceId=' + openid + '&deviceName=' + mobile_brand + '&web=true&forscreen_id=' + forscreen_id + '&filename=' + filename + '&device_model=' + mobile_model + '&resource_size=' + resouce_size + '&duration=' + duration + '&action=2&resource_type=2&avatarUrl=' + avatarUrl +"&nickName="+nickName,
       filePath: vedio_url,
@@ -247,6 +253,7 @@ Page({
           icon: 'none',
           duration: 2000
         });
+        
         wx.reLaunch({
           url: '/pages/index/index?box_mac=' + box_mac,
         })
@@ -268,14 +275,15 @@ Page({
     that.setData({
       popRemoteControlWindow: true,
       qrcode_img: qrcode_url,
-      intranet_ip: intranet_ip
+      intranet_ip: intranet_ip,
+      is_open_control:true,
     })
   },
   //关闭遥控
   closeControl: function (e) {
     var that = this;
     that.setData({
-
+      is_open_control:false,
       popRemoteControlWindow: false,
     })
 
